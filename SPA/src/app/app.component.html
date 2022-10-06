@@ -1,0 +1,64 @@
+<header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <div class="d-flex align-items-center mb-2 mb-lg-0 me-2">
+        <img height="32" src="assets/img/logo_crown.svg" alt="Logo">
+      </div>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li>
+          <h4 class="mb-0">Administrative Division</h4>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="main p-3">
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <section class="main__import mb-5">
+          <h5>Import Data</h5>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+              <form #form="ngForm" (submit)="uploadExcel()" class="input-group mb-3">
+                <input type="file" class="form-control" name="inputFile" (change)="onFileChanged($event)">
+                <button class="input-group-text" type="submit" [disabled]="!file">Upload</button>
+              </form>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <a target="_blank" href="https://danhmuchanhchinh.gso.gov.vn/" class="btn btn-link">
+                Download Excel File
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="main__query">
+          <h5>Query Data</h5>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+              <select class="form-select" [(ngModel)]="provinceID" name="provinceID" (ngModelChange)="provinceChanged()">
+                <option value="" hidden>Select Province</option>
+                <option *ngFor="let item of provinces" [value]="item.key">{{item.value}}</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+              <select class="form-select" [(ngModel)]="districtID" name="districtID" (ngModelChange)="districtChanged()">
+                <option value="" hidden>Select District</option>
+                <option *ngFor="let item of districts" [value]="item.key">{{item.value}}</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+              <select class="form-select" [(ngModel)]="wardID" name="wardID">
+                <option value="" hidden>Select Ward</option>
+                <option *ngFor="let item of wards" [value]="item.key">{{item.value}}</option>
+              </select>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
