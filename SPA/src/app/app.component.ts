@@ -26,7 +26,35 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    await this.getProvinces();
+  }
+
+  async getProvinces(): Promise<void> {
+    this.provinceID = '';
     this.provinces = await firstValueFrom(this.divisionService.getProvinces());
+
+    this.districtID = '';
+    this.districts = [];
+
+    this.wardID = ''
+    this.wards = [];
+  }
+
+  async getDistricts(): Promise<void> {
+    if (this.provinceID) {
+      this.districtID = '';
+      this.districts = await firstValueFrom(this.divisionService.getDistricts(this.provinceID));
+
+      this.wardID = ''
+      this.wards = [];
+    }
+  }
+
+  async getWards(): Promise<void> {
+    if (this.districtID) {
+      this.wardID = '';
+      this.wards = await firstValueFrom(this.divisionService.getWards(this.districtID));
+    }
   }
 
   onFileChanged(event: any) {
@@ -49,11 +77,12 @@ export class AppComponent implements OnInit {
     if (this.file) {
       this.notiflixService.showLoading();
       await firstValueFrom(this.divisionService.uploadExcel(this.file).pipe(
-        tap(res => {
+        tap(async res => {
           this.notiflixService.hideLoading();
           this.file = null;
           if (res.isSuccess) {
             this.notiflixService.success(MSG_CONST.UPLOADED);
+            await this.getProvinces();
           } else {
             this.notiflixService.error(MSG_CONST.UPLOAD_FAILED);
           }
@@ -68,18 +97,10 @@ export class AppComponent implements OnInit {
   }
 
   async provinceChanged(): Promise<void> {
-    if (this.provinceID) {
-      this.districtID = '';
-      this.wardID = ''
-      this.districts = await firstValueFrom(this.divisionService.getDistricts(this.provinceID));
-      this.wards = [];
-    }
+    await this.getDistricts();
   }
 
   async districtChanged(): Promise<void> {
-    if (this.districtID) {
-      this.wardID = '';
-      this.wards = await firstValueFrom(this.divisionService.getWards(this.districtID));
-    }
+    await this.getWards();
   }
 }

@@ -8,7 +8,6 @@ export const environment = {
   production: false,
   baseUrl: baseUrl,
   apiUrl: `${baseUrl}/api`,
-  noImageUrl: `${baseUrl}/assets/img/no-image.jpg`,
   allowedDomains: [hostport],
   disallowedRoutes: [`${hostport}/api/auth`],
 };

@@ -1,12 +1,13 @@
+const port: string = `:${+window.location.port - 1}`;
 const protocol: string = window.location.protocol;
-const apiDomain: string = 'localhost:5207';
-const baseUrl: string = `${protocol}//${apiDomain}`;
+const hostname: string = window.location.hostname;
+const hostport: string = `${hostname}${port}`;
+const baseUrl: string = `${protocol}//${hostport}`;
 
 export const environment = {
   production: true,
-  apiUrl: `${baseUrl}/api/`,
-  baseUrl: `${baseUrl}/`,
-  allowedDomains: [apiDomain],
-  disallowedRoutes: [`${apiDomain}/api/auth`],
-  noImageSrc: `${baseUrl}/assets/img/no-image.jpg`,
+  baseUrl: baseUrl,
+  apiUrl: `${baseUrl}/api`,
+  allowedDomains: [hostport],
+  disallowedRoutes: [`${hostport}/api/auth`],
 };
